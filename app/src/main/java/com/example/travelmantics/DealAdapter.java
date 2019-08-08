@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 //recycler view accepts data from data source either an api or database
@@ -29,16 +26,18 @@ import java.util.ArrayList;
 //viewholder decribes a single data
 //layout manager describes how data is shown in viewHolder
 public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder>{
+
     ArrayList<TravelDeal> deals;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildEventListener;
 
     public DealAdapter(){
-        FirebaseUtil.openFbReference("traveldeals");
+//        FirebaseUtil.openFbReference("traveldeals");
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
-        deals = FirebaseUtil.mDeals;
+
+        this.deals = FirebaseUtil.mDeals;
         mChildEventListener = new ChildEventListener() {
             //first time activity loaded every item in database will triger this method
             @Override
@@ -125,7 +124,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
             int position = getAdapterPosition();
            Log.d("click", String.valueOf(position));
            TravelDeal selectedDeal = deals.get(position);
-           Intent intent = new Intent(view.getContext(), MainActivity.class);
+           Intent intent = new Intent(view.getContext(), DealActivity.class);
            intent.putExtra("Deal", selectedDeal);
            view.getContext().startActivity(intent);
 
